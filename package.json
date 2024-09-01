@@ -1,0 +1,53 @@
+{
+  "name": "basic-styled",
+  "version": "0.0.0",
+  "description": "Basic CSS-in-JS library",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "css-in-js",
+    "emotion",
+    "styled-components"
+  ],
+  "author": "kimjh96 <kimjhs@kakao.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimjh96/basic-styled.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kimjh96/basic-styled/issues",
+    "email": "kimjhs@kakao.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prettier": "prettier --write --config ./.prettierrc \"**/*.{js,mjs,ts,jsx,tsx,mts,json}\"",
+    "convention": "pnpm prettier && eslint --fix \"**/*.{js,mjs,ts,jsx,tsx,mts,html}\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^15.9.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.3.0",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts,jsx,tsx,mts,json}": "prettier --write",
+    "*.{js,mjs,ts,jsx,tsx,mts,html}": "eslint --fix"
+  }
+}
