@@ -8,7 +8,16 @@
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@setup": ["./setup"],
+      "@setup/*": ["./setup/*"],
+      "@styled": ["./styled"],
+      "@styled/*": ["./styled/*"],
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.styles.ts", "**/*.styles.tsx", "**/*.stories.tsx"]
