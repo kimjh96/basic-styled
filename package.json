@@ -42,7 +42,10 @@
     "emotion",
     "styled-components"
   ],
-  "author": "kimjh96 <kimjhs@kakao.com>",
+  "author": {
+    "name": "kimjh96",
+    "email": "kimjhs@kakao.com"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kimjh96/basic-styled.git"
