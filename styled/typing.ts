@@ -50,5 +50,5 @@ export type CreateStyledFunction = <T extends keyof JSX.IntrinsicElements>(
 export interface CreateStyled extends CreateStyledObject, CreateStyledFunction {}
 
 export interface BasicTheme {
-  [key: string]: string;
+  [key: string]: string | number | Record<string, string | number>;
 }

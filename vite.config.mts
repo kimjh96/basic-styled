@@ -2,7 +2,7 @@ import { fileURLToPath } from "node:url";
 
 import react from "@vitejs/plugin-react-swc";
 import { glob } from "glob";
-import path, { extname, relative } from "path";
+import { extname, relative, resolve } from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
@@ -116,7 +116,7 @@ export default defineConfig(() => {
     resolve: {
       alias: inputs.map(({ name }) => ({
         find: `@${name}`,
-        replacement: path.resolve(__dirname, name)
+        replacement: resolve(__dirname, name)
       }))
     }
   };
