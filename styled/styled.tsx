@@ -3,6 +3,7 @@ import getThemeContext from "@setup/getThemeContext";
 import InserterGuard from "@styled/serialize/InserterGuard";
 import convertStringToCssString from "@utils/convertStringToCssString";
 import convertStringToHash from "@utils/convertStringToHash";
+import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 // eslint-disable-next-line no-restricted-imports
 import React, { ElementType } from "react";
 
@@ -81,19 +82,30 @@ const styled: CreateStyledFunction = (Tag) => {
       const compactReducedStyle = reducedStyle.replace(/\s+/g, " ").replace(/\n/g, "");
       const hashId = convertStringToHash(compactReducedStyle);
       const className = `${builder.prefix}-${hashId}`;
+      const cssString = `.${className} {${compactReducedStyle}}`;
       const isGlobalStyle = Tag === "style" && newProps?.globalStyle;
-      const cssString = isGlobalStyle
-        ? compactReducedStyle
-        : `.${className} {${compactReducedStyle}}`;
 
       delete newProps.theme;
 
       if (isGlobalStyle) {
+        const globalCSSString = compactReducedStyle;
+        const globalHashId = convertStringToHash(
+          getExtractCSSProperties(globalCSSString).join(" ")
+        );
+
         return (
           <>
-            <Updater cssString={cssString} asyncStyledValue={asyncStyledValue} />
+            <Updater
+              hashId={globalHashId}
+              cssString={globalCSSString}
+              asyncStyledValue={asyncStyledValue}
+            />
             <InserterGuard>
-              <Inserter cssString={cssString} asyncStyledValue={asyncStyledValue} />
+              <Inserter
+                hashId={globalHashId}
+                cssString={globalCSSString}
+                asyncStyledValue={asyncStyledValue}
+              />
             </InserterGuard>
           </>
         );
@@ -120,9 +132,9 @@ const styled: CreateStyledFunction = (Tag) => {
       if (FinalTag === "input") {
         return (
           <>
-            <Updater cssString={cssString} asyncStyledValue={asyncStyledValue} />
+            <Updater hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
             <InserterGuard>
-              <Inserter cssString={cssString} asyncStyledValue={asyncStyledValue} />
+              <Inserter hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
             </InserterGuard>
             <FinalTag
               {...filteredProps}
@@ -136,13 +148,13 @@ const styled: CreateStyledFunction = (Tag) => {
 
       return (
         <>
-          <Updater cssString={cssString} asyncStyledValue={asyncStyledValue} />
+          <Updater hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
           <FinalTag
             {...filteredProps}
             className={[className, filteredProps?.className].filter(Boolean).join(" ")}
           >
             <InserterGuard>
-              <Inserter cssString={cssString} asyncStyledValue={asyncStyledValue} />
+              <Inserter hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
             </InserterGuard>
             {newProps?.children}
           </FinalTag>

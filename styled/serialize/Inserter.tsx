@@ -1,15 +1,14 @@
 import builder from "@setup/builder";
 import { AsyncStyledValue } from "@styled/typing";
 import convertStringToCssString from "@utils/convertStringToCssString";
-import convertStringToHash from "@utils/convertStringToHash";
 
 interface InserterProps {
+  hashId: number;
   cssString: string;
   asyncStyledValue: AsyncStyledValue;
 }
 
-function Inserter({ cssString, asyncStyledValue }: InserterProps) {
-  const hashId = convertStringToHash(cssString);
+function Inserter({ hashId, cssString, asyncStyledValue }: InserterProps) {
   let newCssString = cssString;
 
   Object.keys(asyncStyledValue).forEach((key) => {

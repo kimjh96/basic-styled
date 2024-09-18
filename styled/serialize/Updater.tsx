@@ -1,17 +1,16 @@
 import builder from "@setup/builder";
 import { AsyncStyledValue } from "@styled/typing";
 import convertStringToCssString from "@utils/convertStringToCssString";
-import convertStringToHash from "@utils/convertStringToHash";
 import { useInsertionEffect } from "react";
 
 interface UpdaterProps {
+  hashId: number;
   cssString: string;
   asyncStyledValue: AsyncStyledValue;
 }
 
-function Updater({ cssString, asyncStyledValue }: UpdaterProps) {
+function Updater({ hashId, cssString, asyncStyledValue }: UpdaterProps) {
   useInsertionEffect(() => {
-    const hashId = convertStringToHash(cssString);
     let newStyleElement = null;
     const prevStyleElement = document.head.querySelector(`#${builder.prefix}-${hashId}`);
 
@@ -42,7 +41,7 @@ function Updater({ cssString, asyncStyledValue }: UpdaterProps) {
           .replace(/\n/g, "");
       });
     });
-  }, [cssString, asyncStyledValue]);
+  }, [cssString, asyncStyledValue, hashId]);
 
   return null;
 }
