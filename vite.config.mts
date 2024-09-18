@@ -64,7 +64,6 @@ export default defineConfig(() => {
                 (withUseClientChunkNameToken) =>
                   chunk.name.indexOf(withUseClientChunkNameToken) !== -1
               );
-              console.log(chunk.name);
 
               if (hasWithUseClientChunkNameToken) {
                 return '"use client"';

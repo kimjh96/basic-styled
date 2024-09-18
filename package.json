@@ -14,10 +14,10 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./setup/builder": {
-      "import": "./dist/setup/builder.es.js",
-      "require": "./dist/setup/builder.js",
-      "types": "./dist/setup/builder.d.ts"
+    "./setup/createBuilder": {
+      "import": "./dist/setup/createBuilder.es.js",
+      "require": "./dist/setup/createBuilder.js",
+      "types": "./dist/setup/createBuilder.d.ts"
     },
     "./setup/ThemeProvider": {
       "import": "./dist/setup/ThemeProvider.es.js",
