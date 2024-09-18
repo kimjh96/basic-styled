@@ -60,7 +60,8 @@
     "watch": "vite build --watch",
     "prettier": "prettier --write --config ./.prettierrc \"**/*.{js,mjs,ts,jsx,tsx,mts,json}\"",
     "convention": "pnpm prettier && eslint --fix \"**/*.{js,mjs,ts,jsx,tsx,mts,html}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
