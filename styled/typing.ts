@@ -49,6 +49,9 @@ export type CreateStyledFunction = <T extends keyof JSX.IntrinsicElements>(
 
 export interface CreateStyled extends CreateStyledObject, CreateStyledFunction {}
 
+// eslint-disable-next-line
+type ArrowFunction = (...args: any[]) => any;
+
 export interface BasicTheme {
-  [key: string]: string | number | Record<string, string | number>;
+  [key: string]: string | number | ArrowFunction | Record<string, string | number | ArrowFunction>;
 }

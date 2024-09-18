@@ -28,11 +28,6 @@
       "import": "./dist/setup/ResetStyle.es.js",
       "require": "./dist/setup/ResetStyle.js",
       "types": "./dist/setup/ResetStyle.d.ts"
-    },
-    "./setup/useTheme": {
-      "import": "./dist/setup/useTheme.es.js",
-      "require": "./dist/setup/useTheme.js",
-      "types": "./dist/setup/useTheme.d.ts"
     }
   },
   "sideEffects": false,
