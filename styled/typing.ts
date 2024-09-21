@@ -52,10 +52,6 @@ export interface CreateStyled extends CreateStyledObject, CreateStyledFunction {
 // eslint-disable-next-line
 type ArrowFunction = (...args: any[]) => any;
 
-type Recursive<T> = {
-  [K in keyof T]: T[K] extends object ? Recursive<T[K]> : T[K];
-};
-
-export type BasicTheme = Recursive<{
+export interface BasicTheme {
   [key: string]: string | number | ArrowFunction | Record<string, string | number | ArrowFunction>;
-}>;
+}
