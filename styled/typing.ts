@@ -53,5 +53,18 @@ export interface CreateStyled extends CreateStyledObject, CreateStyledFunction {
 type ArrowFunction = (...args: any[]) => any;
 
 export interface BasicTheme {
-  [key: string]: string | number | ArrowFunction | Record<string, string | number | ArrowFunction>;
+  [key: string]:
+    | string
+    | number
+    | ArrowFunction
+    | Record<
+        string,
+        | string
+        | number
+        | ArrowFunction
+        | Record<
+            string,
+            string | number | ArrowFunction | Record<string, string | number | ArrowFunction>
+          >
+      >;
 }
