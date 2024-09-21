@@ -1,10 +1,5 @@
 import type { Properties, Pseudos } from "csstype";
-import { ForwardRefExoticComponent, JSX } from "react";
-
-export type GeneralStyledProps = {
-  theme?: BasicTheme;
-  globalStyle?: boolean;
-};
+import { ComponentPropsWithRef, JSX, ReactElement } from "react";
 
 export type CSSObject =
   | Properties
@@ -15,9 +10,17 @@ export type CSSObject =
 
 export type StyledValue = CSSObject | string | null;
 
-export type StyledProps<T extends keyof JSX.IntrinsicElements, P> = JSX.IntrinsicElements[T] &
-  GeneralStyledProps &
-  P;
+export type StyledProps<T extends keyof JSX.IntrinsicElements, P> = ComponentPropsWithRef<T> & {
+  theme: BasicTheme;
+  globalStyle?: boolean;
+} & P;
+
+export type StyledPropsWithoutTheme<T extends keyof JSX.IntrinsicElements, P> = Omit<
+  StyledProps<T, P>,
+  "theme"
+> & {
+  theme?: BasicTheme;
+};
 
 export type AsyncStyledValue = {
   [key: string]: Promise<StyledValue> | null;
@@ -28,13 +31,13 @@ export type StyledArrayFunction<T extends keyof JSX.IntrinsicElements, P> = (
 ) => StyledValue | Promise<StyledValue>;
 
 export type StyledArrayFunctionWithoutTheme<T extends keyof JSX.IntrinsicElements, P> = (
-  props: StyledProps<T, P>
+  props: StyledPropsWithoutTheme<T, P>
 ) => StyledValue | Promise<StyledValue>;
 
 export type CreateStyledTemplate<T extends keyof JSX.IntrinsicElements> = <P>(
   styledArray: TemplateStringsArray,
   ...styledArrayFunctions: StyledArrayFunction<T, P>[]
-) => ForwardRefExoticComponent<GeneralStyledProps & JSX.IntrinsicElements[T]>;
+) => (props: StyledPropsWithoutTheme<T, P>) => ReactElement;
 
 export type CreateStyledObject = {
   [T in keyof JSX.IntrinsicElements]: CreateStyledTemplate<T>;

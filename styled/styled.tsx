@@ -5,7 +5,7 @@ import convertStringToCssString from "@utils/convertStringToCssString";
 import convertStringToHash from "@utils/convertStringToHash";
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 // eslint-disable-next-line no-restricted-imports
-import React, { ElementType, forwardRef } from "react";
+import React, { ElementType } from "react";
 
 import attributes from "./attributes";
 import events from "./events";
@@ -25,7 +25,7 @@ const styled: CreateStyledFunction = (Tag) => {
     const asyncStyledValue: AsyncStyledValue = {};
     const serializeStyledValues: Array<StyledValue> = [];
 
-    return forwardRef(function createStyled(props, ref) {
+    return function createStyled(props) {
       const newProps = { ...props };
 
       if (!newProps?.theme) {
@@ -41,7 +41,7 @@ const styled: CreateStyledFunction = (Tag) => {
           index - 1
         ] as StyledArrayFunctionWithoutTheme<typeof Tag, typeof props>;
 
-        if (typeof styledArrayFunction === "function") {
+        if (styledArrayFunction) {
           const styledValue = styledArrayFunction(newProps);
 
           if (!styledValue) {
@@ -139,7 +139,6 @@ const styled: CreateStyledFunction = (Tag) => {
             <FinalTag
               {...filteredProps}
               className={[className, filteredProps?.className].filter(Boolean).join(" ")}
-              ref={ref}
             >
               {newProps?.children}
             </FinalTag>
@@ -153,7 +152,6 @@ const styled: CreateStyledFunction = (Tag) => {
           <FinalTag
             {...filteredProps}
             className={[className, filteredProps?.className].filter(Boolean).join(" ")}
-            ref={ref}
           >
             <InserterGuard>
               <Inserter hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
@@ -162,7 +160,7 @@ const styled: CreateStyledFunction = (Tag) => {
           </FinalTag>
         </>
       );
-    });
+    };
   };
 };
 
