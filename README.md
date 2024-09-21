@@ -20,6 +20,7 @@ basic-styled 는 기본적인 스타일링 기능을 제공하는 CSS-in-JS 라�
 ```bash
 pnpm add basic-styled
 ```
+
 ```typescript
 import basic-styled from 'basic-styled';
 
@@ -32,4 +33,84 @@ function App() {
 const Box = styled.div`
   border: 1px solid;
 `;
+```
+
+## 예시
+### Theming
+```typescript
+// App.tsx
+
+import ThemeProvider from 'basic-styled/setup/ThemeProvider';
+
+const theme = {
+    palette: {
+        primary: '#007bff',
+    }
+}
+
+return (
+  <ThemeProvider theme={theme}>
+    <div>App</div>
+  </ThemeProvider>
+);
+```
+
+```typescript
+// with TypeScript
+
+import "basic-styled";
+
+declare module "basic-styled" {
+    export interface BasicTheme {
+        palette: {
+            primary: string;
+        };
+    }
+}
+```
+
+### Next.js
+```typescript
+// layout.tsx
+
+import createBuilder from "basic-styled/setup/createBuilder";
+
+const theme = {
+    palette: {
+        primary: '#007bff',
+    }
+}
+
+createBuilder({
+    prefix: 'basic-styled', // prefix for class name, default is 'basic-styled'
+    theme
+});
+
+return (
+    <html lang="ko">
+        <body>
+            {...}
+        </body>
+    </html>
+);
+```
+
+```typescript
+// providers.tsx
+
+'use client';
+
+import ThemeProvider from 'basic-styled/setup/ThemeProvider';
+
+const theme = {
+    palette: {
+        primary: '#007bff',
+    }
+}
+
+return (
+  <ThemeProvider theme={theme}>
+    <div>App</div>
+  </ThemeProvider>
+);
 ```
