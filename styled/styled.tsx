@@ -5,7 +5,7 @@ import convertStringToCssString from "@utils/convertStringToCssString";
 import convertStringToHash from "@utils/convertStringToHash";
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 // eslint-disable-next-line no-restricted-imports
-import React, { ElementType } from "react";
+import React, { ElementType, forwardRef, JSX, PropsWithoutRef, Ref } from "react";
 
 import attributes from "./attributes";
 import events from "./events";
@@ -13,19 +13,23 @@ import Inserter from "./serialize/Inserter";
 import Updater from "./serialize/Updater";
 import {
   AsyncStyledValue,
-  CreateStyledFunction,
   CSSObject,
-  StyledArrayFunctionWithoutTheme,
+  ForwardProps,
+  GeneralStyledProps,
+  StyledArrayFunction,
   StyledValue
 } from "./typing";
 
 // TODO 중복 로직 모듈화
-const styled: CreateStyledFunction = (Tag) => {
-  return (styledArray, ...styledArrayFunctions) => {
+const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
+  return <P,>(
+    styledArray: TemplateStringsArray,
+    ...styledArrayFunctions: StyledArrayFunction<P>[]
+  ) => {
     const asyncStyledValue: AsyncStyledValue = {};
     const serializeStyledValues: Array<StyledValue> = [];
 
-    return function createStyled(props) {
+    return forwardRef(function createStyled(props: PropsWithoutRef<ForwardProps<T, P>>, ref) {
       const newProps = { ...props };
 
       if (!newProps?.theme) {
@@ -37,12 +41,10 @@ const styled: CreateStyledFunction = (Tag) => {
       }
 
       const reducedStyle = styledArray.reduce((acc, curr, index) => {
-        const styledArrayFunction = styledArrayFunctions?.[
-          index - 1
-        ] as StyledArrayFunctionWithoutTheme<typeof Tag, typeof props>;
+        const styledArrayFunction = styledArrayFunctions?.[index - 1];
 
-        if (styledArrayFunction) {
-          const styledValue = styledArrayFunction(newProps);
+        if (typeof styledArrayFunction === "function") {
+          const styledValue = styledArrayFunction(newProps as P & GeneralStyledProps);
 
           if (!styledValue) {
             return `${acc}${curr}`;
@@ -139,6 +141,7 @@ const styled: CreateStyledFunction = (Tag) => {
             <FinalTag
               {...filteredProps}
               className={[className, filteredProps?.className].filter(Boolean).join(" ")}
+              ref={ref as Ref<HTMLInputElement>}
             >
               {newProps?.children}
             </FinalTag>
@@ -152,6 +155,7 @@ const styled: CreateStyledFunction = (Tag) => {
           <FinalTag
             {...filteredProps}
             className={[className, filteredProps?.className].filter(Boolean).join(" ")}
+            ref={ref}
           >
             <InserterGuard>
               <Inserter hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
@@ -160,7 +164,7 @@ const styled: CreateStyledFunction = (Tag) => {
           </FinalTag>
         </>
       );
-    };
+    });
   };
 };
 

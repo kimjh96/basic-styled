@@ -71,7 +71,6 @@ const tags: Array<keyof JSX.IntrinsicElements> = [
   "meter",
   "nav",
   "noscript",
-  "object",
   "ol",
   "optgroup",
   "option",

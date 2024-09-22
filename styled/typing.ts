@@ -1,5 +1,10 @@
 import type { Properties, Pseudos } from "csstype";
-import { ComponentPropsWithRef, JSX, ReactElement } from "react";
+import { ComponentPropsWithRef, JSX, ReactNode } from "react";
+
+export type GeneralStyledProps = {
+  theme: BasicTheme;
+  globalStyle?: boolean;
+};
 
 export type CSSObject =
   | Properties
@@ -10,36 +15,24 @@ export type CSSObject =
 
 export type StyledValue = CSSObject | string | null;
 
-export type StyledProps<T extends keyof JSX.IntrinsicElements, P> = ComponentPropsWithRef<T> & {
-  theme: BasicTheme;
-  globalStyle?: boolean;
-} & P;
-
-export type StyledPropsWithoutTheme<T extends keyof JSX.IntrinsicElements, P> = Omit<
-  StyledProps<T, P>,
-  "theme"
-> & {
-  theme?: BasicTheme;
-};
-
 export type AsyncStyledValue = {
   [key: string]: Promise<StyledValue> | null;
 };
 
-export type StyledArrayFunction<T extends keyof JSX.IntrinsicElements, P> = (
-  props: StyledProps<T, P>
+export type StyledArrayFunction<P> = (
+  props: P & GeneralStyledProps
 ) => StyledValue | Promise<StyledValue>;
 
-export type StyledArrayFunctionWithoutTheme<T extends keyof JSX.IntrinsicElements, P> = (
-  props: StyledPropsWithoutTheme<T, P>
-) => StyledValue | Promise<StyledValue>;
+export type ForwardProps<T extends keyof JSX.IntrinsicElements, P> = Partial<GeneralStyledProps> &
+  P &
+  ComponentPropsWithRef<T>;
 
 export type CreateStyledTemplate<T extends keyof JSX.IntrinsicElements> = <P>(
   styledArray: TemplateStringsArray,
-  ...styledArrayFunctions: StyledArrayFunction<T, P>[]
-) => (props: StyledPropsWithoutTheme<T, P>) => ReactElement;
+  ...styledArrayFunctions: StyledArrayFunction<P>[]
+) => (props: ForwardProps<T, P>) => ReactNode;
 
-export type CreateStyledObject = {
+export type CreateStyledObjectFunction = {
   [T in keyof JSX.IntrinsicElements]: CreateStyledTemplate<T>;
 };
 
@@ -47,7 +40,7 @@ export type CreateStyledFunction = <T extends keyof JSX.IntrinsicElements>(
   Tag: T
 ) => CreateStyledTemplate<T>;
 
-export interface CreateStyled extends CreateStyledObject, CreateStyledFunction {}
+export interface CreateStyled extends CreateStyledObjectFunction, CreateStyledFunction {}
 
 // eslint-disable-next-line
 type ArrowFunction = (...args: any[]) => any;
