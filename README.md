@@ -9,7 +9,7 @@ basic-styled 는 기본적인 스타일링 기능을 제공하는 CSS-in-JS 라�
 - 의존성 없음
 - Theming 지원
 - Server-Side Rendering 지원
-- Server Comonent 지원
+- Next.js 호환
 
 ## 지원
 <div>
@@ -37,7 +37,7 @@ const Box = styled.div`
 
 ## 예시
 ### Theming
-```typescript
+```tsx
 // App.tsx
 
 import ThemeProvider from 'basic-styled/setup/ThemeProvider';
@@ -55,7 +55,7 @@ return (
 );
 ```
 
-```typescript
+```tsx
 // with TypeScript
 
 import "basic-styled";
@@ -70,7 +70,7 @@ declare module "basic-styled" {
 ```
 
 ### Next.js
-```typescript
+```tsx
 // layout.tsx
 
 import createBuilder from "basic-styled/setup/createBuilder";
@@ -95,7 +95,7 @@ return (
 );
 ```
 
-```typescript
+```tsx
 // providers.tsx
 
 'use client';
