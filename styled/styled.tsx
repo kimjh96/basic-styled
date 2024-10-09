@@ -118,7 +118,9 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
         .map((key) => {
           if (
             attributes.includes(key.toLocaleLowerCase()) ||
-            events.includes(key.toLocaleLowerCase())
+            events.includes(key.toLocaleLowerCase()) ||
+            key.indexOf("data") === 0 ||
+            key.indexOf("aria") === 0
           ) {
             return {
               [key]: newProps[key as keyof typeof newProps]
