@@ -1,5 +1,5 @@
+import { AsyncStyledValue } from "@core/typing";
 import builder from "@setup/builder";
-import { AsyncStyledValue } from "@styled/typing";
 import convertStringToCssString from "@utils/convertStringToCssString";
 
 interface InserterProps {

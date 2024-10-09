@@ -1,4 +1,4 @@
-import styled from "@styled";
+import styled from "@core";
 
 const StyledResetStyle = styled.style`
   * {

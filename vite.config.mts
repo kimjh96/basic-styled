@@ -11,12 +11,16 @@ import pkg from "./package.json";
 const withUseClientChunkNameTokens = ["Updater", "Client", "InserterGuard"];
 const inputs = [
   {
-    name: "setup",
+    name: "core",
     pullUp: false
   },
   {
-    name: "styled",
-    pullUp: true
+    name: "serializer",
+    pullUp: false
+  },
+  {
+    name: "setup",
+    pullUp: false
   },
   {
     name: "utils",

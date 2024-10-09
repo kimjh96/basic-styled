@@ -11,10 +11,12 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@core": ["./core"],
+      "@core/*": ["./core/*"],
+      "@serializer": ["./serializer"],
+      "@serializer/*": ["./serializer/*"],
       "@setup": ["./setup"],
       "@setup/*": ["./setup/*"],
-      "@styled": ["./styled"],
-      "@styled/*": ["./styled/*"],
       "@utils": ["./utils"],
       "@utils/*": ["./utils/*"]
     }

@@ -1,4 +1,4 @@
-import { CSSObject } from "@styled/typing";
+import { CSSObject } from "@core/typing";
 
 import convertCamelToKebab from "./convertCamelToKebab";
 

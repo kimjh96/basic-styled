@@ -1,5 +1,5 @@
+import { BasicTheme } from "@core/typing";
 import getThemeContext from "@setup/getThemeContext";
-import { BasicTheme } from "@styled/typing";
 import { PropsWithChildren } from "react";
 
 interface ThemeProviderProps {

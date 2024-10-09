@@ -2,17 +2,14 @@
   "name": "basic-styled",
   "version": "0.0.6",
   "description": "Basic CSS-in-JS library",
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/core/index.es.js",
+      "require": "./dist/core/index.js",
+      "types": "./dist/core/index.d.ts"
     },
     "./setup/createBuilder": {
       "import": "./dist/setup/createBuilder.es.js",
@@ -28,6 +25,11 @@
       "import": "./dist/setup/ResetStyle.es.js",
       "require": "./dist/setup/ResetStyle.js",
       "types": "./dist/setup/ResetStyle.d.ts"
+    },
+    "./setup/useTheme": {
+      "import": "./dist/setup/useTheme.es.js",
+      "require": "./dist/setup/useTheme.js",
+      "types": "./dist/setup/useTheme.d.ts"
     }
   },
   "sideEffects": false,
@@ -77,8 +79,8 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.3.0",
-    "vite": "^5.4.2",
-    "vite-plugin-dts": "^4.0.3"
+    "vite": "^5.4.8",
+    "vite-plugin-dts": "^4.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

@@ -1,6 +1,8 @@
+import Inserter from "@serializer/Inserter";
+import InserterGuard from "@serializer/InserterGuard";
+import Updater from "@serializer/Updater";
 import builder from "@setup/builder";
 import getThemeContext from "@setup/getThemeContext";
-import InserterGuard from "@styled/serialize/InserterGuard";
 import convertStringToCssString from "@utils/convertStringToCssString";
 import convertStringToHash from "@utils/convertStringToHash";
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
@@ -9,8 +11,6 @@ import React, { ElementType, forwardRef, JSX, PropsWithoutRef, Ref } from "react
 
 import attributes from "./attributes";
 import events from "./events";
-import Inserter from "./serialize/Inserter";
-import Updater from "./serialize/Updater";
 import {
   AsyncStyledValue,
   CSSObject,

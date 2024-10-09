@@ -1,4 +1,4 @@
-import { BasicTheme } from "@styled/typing";
+import { BasicTheme } from "@core/typing";
 // eslint-disable-next-line no-restricted-imports
 import * as React from "react";
 
