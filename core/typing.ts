@@ -1,5 +1,6 @@
-import type { Properties, Pseudos } from "csstype";
 import { ComponentPropsWithRef, JSX, ReactNode } from "react";
+
+import type { Properties, Pseudos } from "csstype";
 
 export type GeneralStyledProps = {
   theme: BasicTheme;

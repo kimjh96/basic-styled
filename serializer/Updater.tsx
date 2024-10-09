@@ -1,7 +1,10 @@
-import { AsyncStyledValue } from "@core/typing";
-import builder from "@setup/builder";
-import convertStringToCssString from "@utils/convertStringToCssString";
 import { useInsertionEffect } from "react";
+
+import { AsyncStyledValue } from "@core/typing";
+
+import builder from "@setup/builder";
+
+import convertStringToCssString from "@utils/convertStringToCssString";
 
 interface UpdaterProps {
   hashId: number;

@@ -1,6 +1,8 @@
-import { BasicTheme } from "@core/typing";
-import getThemeContext from "@setup/getThemeContext";
 import { PropsWithChildren } from "react";
+
+import { BasicTheme } from "@core/typing";
+
+import getThemeContext from "@setup/getThemeContext";
 
 interface ThemeProviderProps {
   theme?: BasicTheme;
