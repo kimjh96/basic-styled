@@ -130,7 +130,8 @@ const attributes = [
   "usemap",
   "value",
   "width",
-  "wrap"
+  "wrap",
+  "viewbox"
 ];
 
 export default attributes;
