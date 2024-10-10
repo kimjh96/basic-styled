@@ -1,9 +1,15 @@
-<div align="center">
-  <h1>basic-styled</h1>
-</div>
-basic-styled 는 기본적인 스타일링 기능을 제공하는 CSS-in-JS 라이브러리예요. 고급 스타일링이나 성능이 중요하지 않은 간단한 프로젝트에 사용할 가벼운 라이브러리가 필요하시다면 사용해 보세요!
+![basic-styled](https://github.com/user-attachments/assets/f87cf4c0-f19b-4aee-b51e-4a5a8fbe496c)
 
-## 기능
+basic-styled 는 기초적인 스타일링 기능을 제공하는 CSS-in-JS 라이브러리예요. 고급 스타일링이나 성능이 중요하지 않은 간단한 프로젝트에 사용할 가벼운 라이브러리가 필요하시다면 사용해 보세요!
+
+<p align="center">
+    <img src="https://img.shields.io/github/package-json/v/kimjh96/basic-styled/main?style=flat-square&color=%23004ECC" alt="basic-styled version"/>
+    <img src="https://img.shields.io/github/license/kimjh96/basic-styled?style=flat-square" alt="license" />
+</p>
+
+> React 와 Next.js 에서만 사용할 수 있어요.
+
+## 🚀 기능
 - 작은 사이즈
 - 간단한 사용
 - 의존성 없음
@@ -11,24 +17,21 @@ basic-styled 는 기본적인 스타일링 기능을 제공하는 CSS-in-JS 라�
 - Server-Side Rendering 지원
 - Next.js 호환
 
-## 지원
-<div>
-  <img src="https://img.shields.io/badge/React-rgb(35%2039%2047)?style=flat-square&logo=react" /> <img src="https://img.shields.io/badge/Next.js-rgb(35%2039%2047)?style=flat-square&logo=next.js" />
-</div>
-
-## 시작
+## 설치 및 시작
 ```bash
 pnpm add basic-styled
 ```
 
-```typescript
-import basic-styled from 'basic-styled';
+```tsx
+import styled from 'basic-styled';
 
 function App() {
   return (
     <Box>App</Box>
   );
 }
+
+export default App;
 
 const Box = styled.div`
   border: 1px solid;
@@ -43,16 +46,20 @@ const Box = styled.div`
 import ThemeProvider from 'basic-styled/setup/ThemeProvider';
 
 const theme = {
-    palette: {
-        primary: '#007bff',
-    }
+  palette: {
+    primary: '#007bff',
+  }
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      App
+    </ThemeProvider>
+  );
 }
 
-return (
-  <ThemeProvider theme={theme}>
-    <div>App</div>
-  </ThemeProvider>
-);
+export default App;
 ```
 
 ```tsx
@@ -61,11 +68,11 @@ return (
 import "basic-styled";
 
 declare module "basic-styled" {
-    export interface BasicTheme {
-        palette: {
-            primary: string;
-        };
-    }
+  export interface BasicTheme {
+    palette: {
+      primary: string;
+    };
+  }
 }
 ```
 
@@ -74,25 +81,32 @@ declare module "basic-styled" {
 // layout.tsx
 
 import createBuilder from "basic-styled/setup/createBuilder";
+import Providers from "./providers";
 
 const theme = {
-    palette: {
-        primary: '#007bff',
-    }
-}
+  palette: {
+    primary: '#007bff',
+  }
+};
 
 createBuilder({
-    prefix: 'basic-styled', // prefix for class name, default is 'basic-styled'
-    theme
+  prefix: 'basic-styled', // prefix for class name, default is 'basic-styled'
+  theme
 });
 
-return (
+async function RootLayout({ children }: PropsWithChildren) {
+  return (
     <html lang="ko">
-        <body>
-            {...}
-        </body>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
-);
+  );
+}
+
+export default RootLayout;
 ```
 
 ```tsx
@@ -103,14 +117,87 @@ return (
 import ThemeProvider from 'basic-styled/setup/ThemeProvider';
 
 const theme = {
-    palette: {
-        primary: '#007bff',
-    }
+  palette: {
+    primary: '#007bff',
+  }
+};
+
+function Providers({ children }: PropsWithChildren) {
+  return (
+    <ThemeProvider theme={theme}>
+      {children}
+    </ThemeProvider>
+  );
 }
 
-return (
-  <ThemeProvider theme={theme}>
-    <div>App</div>
-  </ThemeProvider>
-);
+export default Providers;
 ```
+
+### ResetStyle
+```tsx
+// App.tsx
+
+import ThemeProvider from 'basic-styled/setup/ThemeProvider';
+import ResetStyle from 'basic-styled/setup/ResetStyle';
+
+const theme = {
+  palette: {
+    primary: '#007bff',
+  }
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <ResetStyle />
+      App
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+### GlobalStyle
+```tsx
+// App.tsx
+
+import styled from "basic-styled";
+import ThemeProvider from 'basic-styled/setup/ThemeProvider';
+import ResetStyle from 'basic-styled/setup/ResetStyle';
+
+const theme = {
+  palette: {
+    primary: '#007bff',
+  }
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <ResetStyle />
+      <GlobalStyle />
+      App
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
+function GlobalStyle() {
+  return <StyledGlobal globalStyle />;
+}
+
+const StyledGlobal = styled.style`
+  html,
+  body {
+    height: 100%;
+  }
+  #root {
+    min-height: 100%;
+  }
+`;
+```
+
+## 데모
+[plandy-web](https://github.com/case-d-plandy/plandy-web) (https://plandy.case-d.com)
