@@ -86,7 +86,8 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
 
       const compactReducedStyle = reducedStyle.replace(/\s+/g, " ").replace(/\n/g, "");
       const hashId = convertStringToHash(compactReducedStyle);
-      const className = `${builder.prefix}-${hashId}`;
+      const className = hashId ? `${builder.prefix}-${hashId}` : undefined;
+
       const cssString = `.${className} {${compactReducedStyle}}`;
       const isGlobalStyle = Tag === "style" && newProps?.globalStyle;
 
@@ -134,6 +135,8 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
         })
         .filter(Boolean)
         .reduce((acc, curr) => ({ ...acc, ...curr }), {});
+      const mergedClassName =
+        [className, filteredProps?.className].filter(Boolean).join(" ") || undefined;
 
       // TODO 더 나은 방법 고민
       if (FinalTag === "input") {
@@ -145,7 +148,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
             </InserterGuard>
             <FinalTag
               {...filteredProps}
-              className={[className, filteredProps?.className].filter(Boolean).join(" ")}
+              className={mergedClassName}
               ref={ref as Ref<HTMLInputElement>}
             >
               {newProps?.children}
@@ -157,11 +160,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
       return (
         <>
           <Updater hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
-          <FinalTag
-            {...filteredProps}
-            className={[className, filteredProps?.className].filter(Boolean).join(" ")}
-            ref={ref}
-          >
+          <FinalTag {...filteredProps} className={mergedClassName} ref={ref}>
             <InserterGuard>
               <Inserter hashId={hashId} cssString={cssString} asyncStyledValue={asyncStyledValue} />
             </InserterGuard>
