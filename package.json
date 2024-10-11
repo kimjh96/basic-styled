@@ -1,6 +1,6 @@
 {
   "name": "basic-styled",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Basic CSS-in-JS library",
   "files": [
     "dist"
