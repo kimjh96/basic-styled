@@ -5,12 +5,10 @@ import { BasicTheme } from "@core/typing";
 
 let clientContext: React.Context<BasicTheme>;
 
-function GetThemeContext() {
+export default function getThemeContext() {
   if (!clientContext) {
     clientContext = React.createContext<BasicTheme>({});
   }
 
   return clientContext;
 }
-
-export default GetThemeContext;

@@ -2,6 +2,9 @@
   "name": "basic-styled",
   "version": "0.0.9",
   "description": "Basic CSS-in-JS library",
+  "main": "./dist/core/index.js",
+  "module": "./dist/core/index.es.js",
+  "types": "./dist/core/index.d.ts",
   "files": [
     "dist"
   ],

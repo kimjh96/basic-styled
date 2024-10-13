@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 
-import { extname, relative, resolve } from "path";
+import { extname, resolve } from "path";
 
 import react from "@vitejs/plugin-react-swc";
 import { glob } from "glob";
@@ -10,39 +10,22 @@ import dts from "vite-plugin-dts";
 import pkg from "./package.json";
 
 const withUseClientChunkNameTokens = ["Updater", "Client", "InserterGuard"];
-const inputs = [
-  {
-    name: "core",
-    pullUp: false
-  },
-  {
-    name: "serializer",
-    pullUp: false
-  },
-  {
-    name: "setup",
-    pullUp: false
-  },
-  {
-    name: "utils",
-    pullUp: false
-  }
-];
+const inputs = ["core", "serializer", "setup", "utils"];
 
 export default defineConfig(() => {
   return {
     build: {
       lib: {
-        entry: "styled/index.ts",
+        entry: "core/index.ts",
         name: "basic-styled"
       },
       rollupOptions: {
         external: [...Object.keys(pkg.peerDependencies), /jsx-runtime/g],
         input: Object.fromEntries(
           inputs
-            .map(({ name, pullUp }) =>
+            .map((input) =>
               glob
-                .sync(`${name}/**/*.{ts,tsx}`, {
+                .sync(`${input}/**/*.{ts,tsx}`, {
                   ignore: [
                     "**/*.d.ts",
                     "**/*.styles.{ts,tsx}",
@@ -52,9 +35,7 @@ export default defineConfig(() => {
                   ]
                 })
                 .map((file) => [
-                  pullUp
-                    ? relative(name, file.slice(0, file.length - extname(file).length))
-                    : file.slice(0, file.length - extname(file).length),
+                  file.slice(0, file.length - extname(file).length),
                   fileURLToPath(new URL(file, import.meta.url))
                 ])
             )
@@ -98,29 +79,11 @@ export default defineConfig(() => {
         ]
       }
     },
-    plugins: [
-      react(),
-      dts({
-        beforeWriteFile: (filePath, content) => {
-          let newPath = filePath;
-          let newContent = content;
-
-          inputs.forEach(({ name, pullUp }) => {
-            if (pullUp) {
-              newPath = newPath.replace(`/${name}`, "");
-
-              newContent = content.replace(/from '\.\.\/\.\.\//g, "from '../");
-            }
-          });
-
-          return { filePath: newPath, content: newContent };
-        }
-      })
-    ],
+    plugins: [react(), dts()],
     resolve: {
-      alias: inputs.map(({ name }) => ({
-        find: `@${name}`,
-        replacement: resolve(__dirname, name)
+      alias: inputs.map((input) => ({
+        find: `@${input}`,
+        replacement: resolve(__dirname, input)
       }))
     }
   };
