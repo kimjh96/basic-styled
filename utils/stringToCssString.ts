@@ -1,15 +1,15 @@
 import { CSSObject } from "@core/typing";
 
-import convertCamelToKebab from "./convertCamelToKebab";
+import camelToKebab from "./camelToKebab";
 
 export default function convertToCssString(cssObject: CSSObject): string {
   return Object.entries(cssObject)
     .map(([key, value]) => {
       if (typeof value === "object") {
-        return `${convertCamelToKebab(key)} { ${convertToCssString(value)} }`;
+        return `${camelToKebab(key)} { ${convertToCssString(value)} }`;
       }
 
-      return `${convertCamelToKebab(key)}: ${value}`;
+      return `${camelToKebab(key)}: ${value}`;
     })
     .join("; ");
 }

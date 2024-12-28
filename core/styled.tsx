@@ -8,9 +8,9 @@ import Updater from "@serializer/Updater";
 import builder from "@setup/builder";
 import getThemeContext from "@setup/getThemeContext";
 
-import convertStringToCssString from "@utils/convertStringToCssString";
-import convertStringToHash from "@utils/convertStringToHash";
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
+import convertStringToCssString from "@utils/stringToCssString";
+import stringToHash from "@utils/stringToHash";
 
 import attributes from "./attributes";
 import events from "./events";
@@ -85,7 +85,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
       });
 
       const compactReducedStyle = reducedStyle.replace(/\s+/g, " ").replace(/\n/g, "");
-      const hashId = convertStringToHash(compactReducedStyle);
+      const hashId = stringToHash(compactReducedStyle);
       const className = hashId ? `${builder.prefix}-${hashId}` : undefined;
 
       const cssString = `.${className} {${compactReducedStyle}}`;
@@ -95,9 +95,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
 
       if (isGlobalStyle) {
         const globalCSSString = compactReducedStyle;
-        const globalHashId = convertStringToHash(
-          getExtractCSSProperties(globalCSSString).join(" ")
-        );
+        const globalHashId = stringToHash(getExtractCSSProperties(globalCSSString).join(" "));
 
         return (
           <>

@@ -2,7 +2,7 @@ import { AsyncStyledValue } from "@core/typing";
 
 import builder from "@setup/builder";
 
-import convertStringToCssString from "@utils/convertStringToCssString";
+import convertStringToCssString from "@utils/stringToCssString";
 
 interface InserterProps {
   hashId: number;

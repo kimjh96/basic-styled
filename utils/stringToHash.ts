@@ -1,4 +1,4 @@
-export default function convertStringToHash(value: string) {
+export default function stringToHash(value: string) {
   let hashedValue = 0;
   for (let i = 0; i < value.length; i += 1) {
     hashedValue = Math.imul(31, hashedValue) + value.charCodeAt(i) || 0;
