@@ -131,7 +131,8 @@ const attributes = [
   "value",
   "width",
   "wrap",
-  "viewbox"
+  "viewbox",
+  "classname"
 ];
 
 export default attributes;
