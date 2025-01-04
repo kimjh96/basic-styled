@@ -16,8 +16,7 @@ export default defineConfig(() => {
   return {
     build: {
       lib: {
-        entry: "core/index.ts",
-        name: "basic-styled"
+        entry: "core/index.ts"
       },
       rollupOptions: {
         external: [...Object.keys(pkg.peerDependencies), /jsx-runtime/g],
@@ -42,23 +41,6 @@ export default defineConfig(() => {
             .flat()
         ),
         output: [
-          {
-            interop: "auto",
-            format: "cjs",
-            banner: (chunk) => {
-              const hasWithUseClientChunkNameToken = withUseClientChunkNameTokens.some(
-                (withUseClientChunkNameToken) =>
-                  chunk.name.indexOf(withUseClientChunkNameToken) !== -1
-              );
-
-              if (hasWithUseClientChunkNameToken) {
-                return '"use client"';
-              }
-
-              return "";
-            },
-            entryFileNames: "[name].js"
-          },
           {
             interop: "auto",
             format: "es",
