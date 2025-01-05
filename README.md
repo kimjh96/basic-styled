@@ -1,6 +1,6 @@
-![basic-styled](https://github.com/user-attachments/assets/f87cf4c0-f19b-4aee-b51e-4a5a8fbe496c)
+![Banner(basic-styled)](https://github.com/user-attachments/assets/62bb8839-3fa1-403d-a39b-4e6d22481588)
 
-basic-styled 는 기초적인 스타일링 기능을 제공하는 React 전용 CSS-in-JS 라이브러리예요. 고급 스타일링이나 성능이 중요하지 않은 간단한 프로젝트에 사용할 가벼운 라이브러리가 필요하시다면 사용해 보세요!
+basic-styled 는 기초적인 스타일링 기능을 제공하는 React 전용 CSS-in-JS 라이브러리예요. 고급 스타일링이나 성능이 중요하지 않은 간단한 프로젝트라면 한 번 사용해 보세요!
 
 <p align="center">
     <img src="https://img.shields.io/npm/v/basic-styled?style=flat-square&labelColor=%2360758B&color=%23004ECC" alt="basic-styled version"/>
