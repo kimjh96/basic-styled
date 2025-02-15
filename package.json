@@ -2,36 +2,31 @@
   "name": "basic-styled",
   "version": "0.0.11",
   "description": "Basic CSS-in-JS library",
-  "main": "./dist/core/index.es.js",
-  "module": "./dist/core/index.es.js",
+  "main": "./dist/core/index.js",
+  "module": "./dist/core/index.js",
   "types": "./dist/core/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/core/index.es.js",
-      "require": "./dist/core/index.js",
+      "import": "./dist/core/index.js",
       "types": "./dist/core/index.d.ts"
     },
     "./setup/createBuilder": {
-      "import": "./dist/setup/createBuilder.es.js",
-      "require": "./dist/setup/createBuilder.js",
+      "import": "./dist/setup/createBuilder.js",
       "types": "./dist/setup/createBuilder.d.ts"
     },
     "./setup/ThemeProvider": {
-      "import": "./dist/setup/ThemeProvider.es.js",
-      "require": "./dist/setup/ThemeProvider.js",
+      "import": "./dist/setup/ThemeProvider.js",
       "types": "./dist/setup/ThemeProvider.d.ts"
     },
     "./setup/ResetStyle": {
-      "import": "./dist/setup/ResetStyle.es.js",
-      "require": "./dist/setup/ResetStyle.js",
+      "import": "./dist/setup/ResetStyle.js",
       "types": "./dist/setup/ResetStyle.d.ts"
     },
     "./setup/useTheme": {
-      "import": "./dist/setup/useTheme.es.js",
-      "require": "./dist/setup/useTheme.js",
+      "import": "./dist/setup/useTheme.js",
       "types": "./dist/setup/useTheme.d.ts"
     }
   },
@@ -59,32 +54,32 @@
     "build": "vite build",
     "watch": "vite build --watch",
     "prettier": "prettier --write --config ./.prettierrc \"**/*.{js,mjs,ts,jsx,tsx,mts,json}\"",
-    "convention": "pnpm prettier && eslint --fix \"**/*.{js,mjs,ts,jsx,tsx,mts,html}\"",
+    "convention": "pnpm prettier && eslint --fix \"**/*.{js,mjs,ts,jsx,tsx,mts}\"",
     "prepare": "husky",
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.12.0",
-    "@types/node": "^22.7.5",
-    "@types/react": "^18.3.11",
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.7.1",
+    "@vitejs/plugin-react-swc": "^3.8.0",
     "csstype": "^3.1.3",
-    "eslint": "^9.12.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.8.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.37.1",
-    "glob": "^11.0.0",
-    "globals": "^15.11.0",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.8.1",
-    "vite": "^5.4.8",
-    "vite-plugin-dts": "^4.2.3"
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "glob": "^11.0.1",
+    "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.1",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0",
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -92,6 +87,12 @@
   },
   "lint-staged": {
     "*.{js,mjs,ts,jsx,tsx,mts,json}": "prettier --write",
-    "*.{js,mjs,ts,jsx,tsx,mts,html}": "eslint --fix"
+    "*.{js,mjs,ts,jsx,tsx,mts}": "eslint --fix"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@swc/core",
+      "esbuild"
+    ]
   }
 }

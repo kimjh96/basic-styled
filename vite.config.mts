@@ -56,7 +56,7 @@ export default defineConfig(() => {
 
               return "";
             },
-            entryFileNames: "[name].es.js"
+            entryFileNames: "[name].js"
           }
         ]
       }
