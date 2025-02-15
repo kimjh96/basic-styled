@@ -1,3 +1,4 @@
+import css from "./css";
 import styled from "./styled";
 import tags from "./tags";
 import { BasicTheme, CreateStyled } from "./typing";
@@ -10,5 +11,7 @@ tags.forEach((tag) => {
 });
 
 export default newStyled;
+
+export { css };
 
 export type { BasicTheme };

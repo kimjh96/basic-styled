@@ -3,8 +3,9 @@ import { ComponentPropsWithRef, JSX, ReactNode } from "react";
 import type { Properties, Pseudos } from "csstype";
 
 export type GeneralStyledProps = {
-  theme: BasicTheme;
+  theme?: BasicTheme;
   globalStyle?: boolean;
+  css?: ReturnType<CSS>;
 };
 
 export type CSSObject =
@@ -23,6 +24,11 @@ export type AsyncStyledValue = {
 export type StyledArrayFunction<P> = (
   props: P & GeneralStyledProps
 ) => StyledValue | Promise<StyledValue>;
+
+export type CSS = (
+  styledArray: TemplateStringsArray,
+  ...styledArrayFunctions: StyledArrayFunction<unknown>[]
+) => { styledArray: TemplateStringsArray; styledArrayFunctions: StyledArrayFunction<unknown>[] };
 
 export type ForwardProps<T extends keyof JSX.IntrinsicElements, P> = Partial<GeneralStyledProps> &
   P &
