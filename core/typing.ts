@@ -3,9 +3,9 @@ import { ComponentPropsWithRef, JSX, ReactNode } from "react";
 import type { Properties, Pseudos } from "csstype";
 
 export type GeneralStyledProps = {
-  theme?: BasicTheme;
+  theme: BasicTheme;
   globalStyle?: boolean;
-  css?: ReturnType<CSS>;
+  css?: CSSFunction;
 };
 
 export type CSSObject =
@@ -29,6 +29,8 @@ export type CSS = (
   styledArray: TemplateStringsArray,
   ...styledArrayFunctions: StyledArrayFunction<unknown>[]
 ) => { styledArray: TemplateStringsArray; styledArrayFunctions: StyledArrayFunction<unknown>[] };
+
+export type CSSFunction = ReturnType<CSS>;
 
 export type ForwardProps<T extends keyof JSX.IntrinsicElements, P> = Partial<GeneralStyledProps> &
   P &

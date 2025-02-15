@@ -32,7 +32,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
     const serializeStyledValues: Array<StyledValue> = [];
 
     return forwardRef(function createStyled(props: PropsWithoutRef<ForwardProps<T, P>>, ref) {
-      const newProps = { ...props } as typeof props & P & GeneralStyledProps;
+      const newProps = { ...props };
 
       if (!newProps?.theme) {
         try {
@@ -42,23 +42,20 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
         }
       }
 
-      const style =
-        createStyle({
-          styledArray,
-          styledArrayFunctions,
-          props: newProps,
-          asyncStyledValue,
-          serializeStyledValues
-        }) || "";
-      const cssStyle =
-        createStyle({
-          styledArray: newProps?.css?.styledArray,
-          styledArrayFunctions: newProps?.css?.styledArrayFunctions || [],
-          props: newProps,
-          asyncStyledValue,
-          serializeStyledValues
-        }) || "";
-
+      const style = createStyle<P>({
+        styledArray,
+        styledArrayFunctions,
+        props: newProps as P & GeneralStyledProps,
+        asyncStyledValue,
+        serializeStyledValues
+      });
+      const cssStyle = createStyle({
+        styledArray: newProps?.css?.styledArray,
+        styledArrayFunctions: newProps?.css?.styledArrayFunctions || [],
+        props: newProps as GeneralStyledProps,
+        asyncStyledValue,
+        serializeStyledValues
+      });
       const compactStyle = style?.replace(/\s+/g, " ").replace(/\n/g, "");
       const compactCssStyle = cssStyle?.replace(/\s+/g, " ").replace(/\n/g, "");
       const composedStyle = `${compactStyle}${compactCssStyle}`;

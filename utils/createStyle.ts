@@ -21,6 +21,8 @@ export default function createStyle<P>({
   asyncStyledValue: AsyncStyledValue;
   serializeStyledValues: Array<StyledValue>;
 }) {
+  if (!styledArray) return "";
+
   return styledArray?.reduce((acc, curr, index) => {
     const styledArrayFunction = styledArrayFunctions?.[index - 1];
 
