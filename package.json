@@ -1,6 +1,6 @@
 {
   "name": "basic-styled",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Basic CSS-in-JS library",
   "main": "./dist/core/index.js",
   "module": "./dist/core/index.js",
