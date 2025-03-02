@@ -2,31 +2,31 @@
   "name": "basic-styled",
   "version": "0.0.13",
   "description": "Basic CSS-in-JS library",
-  "main": "./dist/core/index.js",
-  "module": "./dist/core/index.js",
+  "main": "./dist/core/index.mjs",
+  "module": "./dist/core/index.mjs",
   "types": "./dist/core/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/core/index.js",
+      "import": "./dist/core/index.mjs",
       "types": "./dist/core/index.d.ts"
     },
     "./setup/createBuilder": {
-      "import": "./dist/setup/createBuilder.js",
+      "import": "./dist/setup/createBuilder.mjs",
       "types": "./dist/setup/createBuilder.d.ts"
     },
     "./setup/ThemeProvider": {
-      "import": "./dist/setup/ThemeProvider.js",
+      "import": "./dist/setup/ThemeProvider.mjs",
       "types": "./dist/setup/ThemeProvider.d.ts"
     },
     "./setup/ResetStyle": {
-      "import": "./dist/setup/ResetStyle.js",
+      "import": "./dist/setup/ResetStyle.mjs",
       "types": "./dist/setup/ResetStyle.d.ts"
     },
     "./setup/useTheme": {
-      "import": "./dist/setup/useTheme.js",
+      "import": "./dist/setup/useTheme.mjs",
       "types": "./dist/setup/useTheme.d.ts"
     }
   },
