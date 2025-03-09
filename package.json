@@ -59,14 +59,14 @@
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/node": "^22.13.8",
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "csstype": "^3.1.3",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^3.8.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.3",
@@ -75,24 +75,18 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
-    "prettier": "^3.5.2",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.25.0",
-    "vite": "^6.2.0",
-    "vite-plugin-dts": "^4.5.1"
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "vite": "^6.2.1",
+    "vite-plugin-dts": "^4.5.3"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "lint-staged": {
     "*.{js,mjs,ts,jsx,tsx,mts,json}": "prettier --write",
     "*.{js,mjs,ts,jsx,tsx,mts}": "eslint --fix"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "@swc/core",
-      "esbuild"
-    ]
   }
 }

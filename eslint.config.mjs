@@ -7,8 +7,7 @@ import tseslint from "typescript-eslint";
 
 export default [
   {
-    files: ["**/*.{js,mjs,cjs,mts,ts,jsx,tsx}"],
-    ignores: ["dist/**/*", "node_modules/**/*"]
+    files: ["**/*.{js,mjs,cjs,mts,ts,jsx,tsx}"]
   },
   {
     languageOptions: {
@@ -17,6 +16,9 @@ export default [
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    ignores: ["dist"]
+  },
   pluginImport.flatConfigs.recommended,
   pluginReact.configs.flat.recommended,
   pluginPrettierRecommended,

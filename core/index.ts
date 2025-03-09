@@ -1,7 +1,7 @@
-import css from "./css";
-import styled from "./styled";
-import tags from "./tags";
-import { BasicTheme, CreateStyled } from "./typing";
+import css from "@core/css";
+import styled from "@core/styled";
+import tags from "@core/tags";
+import { BasicTheme, CreateStyled, CSSObject } from "@core/typing";
 
 const newStyled = styled.bind(null) as unknown as CreateStyled;
 
@@ -14,4 +14,4 @@ export default newStyled;
 
 export { css };
 
-export type { BasicTheme };
+export type { BasicTheme, CSSObject };

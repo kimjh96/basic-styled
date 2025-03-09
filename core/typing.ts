@@ -3,6 +3,7 @@ import { ComponentPropsWithRef, JSX, ReactNode } from "react";
 import type { Properties, Pseudos } from "csstype";
 
 export type GeneralStyledProps = {
+  tag?: keyof JSX.IntrinsicElements;
   theme: BasicTheme;
   globalStyle?: boolean;
   css?: CSSFunction;

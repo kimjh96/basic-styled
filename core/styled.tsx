@@ -1,6 +1,16 @@
 // eslint-disable-next-line no-restricted-imports
 import React, { ElementType, forwardRef, JSX, PropsWithoutRef, Ref } from "react";
 
+import attributes from "@core/attributes";
+import events from "@core/events";
+import {
+  AsyncStyledValue,
+  ForwardProps,
+  GeneralStyledProps,
+  StyledArrayFunction,
+  StyledValue
+} from "@core/typing";
+
 import Inserter from "@serializer/Inserter";
 import InserterGuard from "@serializer/InserterGuard";
 import Updater from "@serializer/Updater";
@@ -11,16 +21,6 @@ import getThemeContext from "@setup/getThemeContext";
 import createStyle from "@utils/createStyle";
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 import stringToHash from "@utils/stringToHash";
-
-import attributes from "./attributes";
-import events from "./events";
-import {
-  AsyncStyledValue,
-  ForwardProps,
-  GeneralStyledProps,
-  StyledArrayFunction,
-  StyledValue
-} from "./typing";
 
 // TODO 중복 로직 모듈화
 const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
@@ -90,7 +90,7 @@ const styled = <T extends keyof JSX.IntrinsicElements>(Tag: T) => {
         );
       }
 
-      const FinalTag = Tag as ElementType;
+      const FinalTag = (newProps?.tag || Tag) as ElementType;
       const filteredProps = Object.keys(newProps)
         .map((key) => {
           if (
