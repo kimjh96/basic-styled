@@ -8,7 +8,6 @@ import Injector from "@core/injector";
 
 import tags from "@core/tags";
 import {
-  BasicTheme,
   StyledProps,
   StyledFunction,
   StyledTagFunction,
@@ -29,6 +28,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
   values: CSSInterpolation<StyledProps<T, P>>[]
 ): StyledComponent<T, P> {
   const StyledComponent = ({
+    ref,
     as,
     className,
     ...props
@@ -58,9 +58,8 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     if (props?.css) {
       const cssValue =
         typeof props.css === "function"
-          ? props.css({ ...props, theme: props.theme } as StyledProps<T, P> & { theme: BasicTheme })
+          ? props.css({ ...props, theme: props.theme } as ThemedProps<StyledProps<T, P>>)
           : props.css;
-
       const cssString = Object.entries(cssValue)
         .map(([key, value]) => {
           if (typeof value === "object") {
@@ -116,7 +115,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       <>
         <Injector className={baseStyle.className} rule={baseStyle.rule} />
         {inlineCSS.className && <Injector className={inlineCSS.className} rule={inlineCSS.rule} />}
-        <FinalComponent {...naturalProps} className={finalClassName}>
+        <FinalComponent ref={ref} {...naturalProps} className={finalClassName}>
           {props?.children}
         </FinalComponent>
       </>

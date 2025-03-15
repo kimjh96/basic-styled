@@ -17,7 +17,7 @@ export type BaseStyledProps = {
   css?:
     | CSSObject
     | (<T extends ElementType, P extends object = object>(
-        props: StyledProps<T, P> & { theme: BasicTheme }
+        props: ThemedProps<StyledProps<T, P>>
       ) => CSSObject);
 };
 
@@ -39,7 +39,7 @@ export type StyledComponent<T extends ElementType, P extends object = object> = 
   withComponent: <NewT extends ElementType>(component: NewT) => StyledComponent<NewT, P>;
 };
 
-export type ThemedProps<P extends object = object> = P & Required<BaseStyledProps>;
+export type ThemedProps<P extends object = object> = P & { theme: BasicTheme };
 
 export type NestedStyleObject = {
   [key: string]: string | number | CSSObject | NestedStyleObject;
