@@ -1,13 +1,4 @@
-import { ComponentPropsWithRef, JSX, ReactNode } from "react";
-
 import type { Properties, Pseudos } from "csstype";
-
-export type GeneralStyledProps = {
-  tag?: keyof JSX.IntrinsicElements;
-  theme: BasicTheme;
-  globalStyle?: boolean;
-  css?: CSSFunction;
-};
 
 export type CSSObject =
   | Properties
@@ -16,58 +7,6 @@ export type CSSObject =
       [propertiesName: string]: Properties;
     };
 
-export type StyledValue = CSSObject | string | null;
-
-export type AsyncStyledValue = {
-  [key: string]: Promise<StyledValue> | null;
-};
-
-export type StyledArrayFunction<P> = (
-  props: P & GeneralStyledProps
-) => StyledValue | Promise<StyledValue>;
-
-export type CSS = (
-  styledArray: TemplateStringsArray,
-  ...styledArrayFunctions: StyledArrayFunction<unknown>[]
-) => { styledArray: TemplateStringsArray; styledArrayFunctions: StyledArrayFunction<unknown>[] };
-
-export type CSSFunction = ReturnType<CSS>;
-
-export type ForwardProps<T extends keyof JSX.IntrinsicElements, P> = Partial<GeneralStyledProps> &
-  P &
-  ComponentPropsWithRef<T>;
-
-export type CreateStyledTemplate<T extends keyof JSX.IntrinsicElements> = <P>(
-  styledArray: TemplateStringsArray,
-  ...styledArrayFunctions: StyledArrayFunction<P>[]
-) => (props: ForwardProps<T, P>) => ReactNode;
-
-export type CreateStyledObjectFunction = {
-  [T in keyof JSX.IntrinsicElements]: CreateStyledTemplate<T>;
-};
-
-export type CreateStyledFunction = <T extends keyof JSX.IntrinsicElements>(
-  Tag: T
-) => CreateStyledTemplate<T>;
-
-export interface CreateStyled extends CreateStyledObjectFunction, CreateStyledFunction {}
-
-// eslint-disable-next-line
-type ArrowFunction = (...args: any[]) => any;
-
 export interface BasicTheme {
-  [key: string]:
-    | string
-    | number
-    | ArrowFunction
-    | Record<
-        string,
-        | string
-        | number
-        | ArrowFunction
-        | Record<
-            string,
-            string | number | ArrowFunction | Record<string, string | number | ArrowFunction>
-          >
-      >;
+  [key: string]: unknown;
 }

@@ -1,7 +1,10 @@
 export default function stringToHash(value: string) {
-  let hashedValue = 0;
-  for (let i = 0; i < value.length; i += 1) {
-    hashedValue = Math.imul(31, hashedValue) + value.charCodeAt(i) || 0;
+  let hash = 5381;
+  let i = value.length;
+
+  while (i) {
+    hash = (hash * 33) ^ value.charCodeAt(--i);
   }
-  return Math.abs(hashedValue);
+
+  return (hash >>> 0).toString(36);
 }

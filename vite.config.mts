@@ -7,8 +7,8 @@ import { glob } from "glob";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-const withUseClientChunkNameTokens = ["Updater", "Client", "InserterGuard"];
-const inputs = ["core", "serializer", "setup", "utils"];
+const withUseClientChunkNameTokens = ["injector"];
+const inputs = ["core", "setup", "utils"];
 
 export default defineConfig({
   build: {
