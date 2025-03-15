@@ -31,7 +31,6 @@ function createStyledComponent<T extends ElementType, P extends object = object>
   const StyledComponent = ({
     as,
     className,
-    ref,
     ...props
   }: StyledProps<T, P> & { as?: ElementType }) => {
     if (!props?.theme) {
@@ -59,9 +58,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     if (props?.css) {
       const cssValue =
         typeof props.css === "function"
-          ? props.css({ ...props, theme: props.theme } as StyledProps<T, P> & {
-              theme: BasicTheme;
-            })
+          ? props.css({ ...props, theme: props.theme } as StyledProps<T, P> & { theme: BasicTheme })
           : props.css;
 
       const cssString = Object.entries(cssValue)
@@ -78,8 +75,8 @@ function createStyledComponent<T extends ElementType, P extends object = object>
         .join(" ");
 
       inlineCSS = styler`
-      ${cssString}
-    `;
+        ${cssString}
+      `;
     }
 
     if (isGlobalStyle) {
@@ -119,14 +116,12 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       <>
         <Injector className={baseStyle.className} rule={baseStyle.rule} />
         {inlineCSS.className && <Injector className={inlineCSS.className} rule={inlineCSS.rule} />}
-        <FinalComponent ref={ref} {...naturalProps} className={finalClassName}>
+        <FinalComponent {...naturalProps} className={finalClassName}>
           {props?.children}
         </FinalComponent>
       </>
     );
   };
-
-  StyledComponent.displayName = `Styled(${typeof Component === "string" ? Component : Component.displayName || Component.name || "Component"})`;
 
   return Object.assign(StyledComponent, {
     withComponent: <NewT extends ElementType>(newComponent: NewT) =>
