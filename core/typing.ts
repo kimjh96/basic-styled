@@ -25,12 +25,15 @@ export type StyledProps<T extends ElementType, P extends object = object> = P &
   BaseStyledProps &
   Omit<
     JSX.IntrinsicElements[T extends keyof JSX.IntrinsicElements ? T : "div"],
-    keyof BaseStyledProps | "ref"
+    keyof BaseStyledProps
   >;
 
 export type StyledComponent<T extends ElementType, P extends object = object> = {
   <As extends ElementType>(
-    props: Omit<StyledProps<As, P>, keyof BaseStyledProps> & BaseStyledProps & { as: As }
+    props: Omit<StyledProps<As, P>, keyof BaseStyledProps> &
+      BaseStyledProps & {
+        as: As;
+      }
   ): JSX.Element;
   (props: StyledProps<T, P>): JSX.Element;
 } & {
