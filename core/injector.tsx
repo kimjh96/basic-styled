@@ -5,12 +5,13 @@ import optimizeCSSRule from "@utils/optimizeCSSRule";
 function Injector({
   children,
   className,
-  rule
-}: PropsWithChildren<{ className: string; rule: string }>) {
+  rule,
+  globalStyle
+}: PropsWithChildren<{ className: string; rule: string; globalStyle?: boolean }>) {
   useInsertionEffect(() => {
     if (typeof document !== "undefined") {
       const prevStyle = document.getElementById(className);
-      const textContent = optimizeCSSRule(`.${className}`, rule);
+      const textContent = globalStyle ? rule : optimizeCSSRule(`.${className}`, rule);
 
       if (prevStyle) {
         prevStyle.textContent = textContent;

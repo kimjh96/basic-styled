@@ -122,12 +122,14 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     if (props?.globalStyle) {
       return (
         <>
-          <Injector className={baseStyle.className} rule={baseStyle.rule} />
+          <Injector className={baseStyle.className} rule={baseStyle.rule} globalStyle />
           {inlineCSS.className && (
-            <Injector className={inlineCSS.className} rule={inlineCSS.rule} />
+            <Injector className={inlineCSS.className} rule={inlineCSS.rule} globalStyle />
           )}
-          <Server className={baseStyle.className} rule={baseStyle.rule} />
-          {inlineCSS.className && <Server className={inlineCSS.className} rule={inlineCSS.rule} />}
+          <Server className={baseStyle.className} rule={baseStyle.rule} globalStyle />
+          {inlineCSS.className && (
+            <Server className={inlineCSS.className} rule={inlineCSS.rule} globalStyle />
+          )}
         </>
       );
     }
