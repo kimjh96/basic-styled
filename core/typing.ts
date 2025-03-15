@@ -1,3 +1,7 @@
+import { ElementType, JSX } from "react";
+
+import tags from "@core/tags";
+
 import type { Properties, Pseudos } from "csstype";
 
 export type CSSObject =
@@ -6,6 +10,63 @@ export type CSSObject =
   | {
       [propertiesName: string]: Properties;
     };
+
+export type BaseStyledProps = {
+  theme?: BasicTheme;
+  globalStyle?: boolean;
+  css?:
+    | CSSObject
+    | (<T extends ElementType, P extends object = object>(
+        props: StyledProps<T, P> & { theme: BasicTheme }
+      ) => CSSObject);
+};
+
+export type StyledProps<T extends ElementType, P extends object = object> = P &
+  BaseStyledProps &
+  Omit<
+    JSX.IntrinsicElements[T extends keyof JSX.IntrinsicElements ? T : "div"],
+    keyof BaseStyledProps | "ref"
+  >;
+
+export type StyledComponent<T extends ElementType, P extends object = object> = {
+  <As extends ElementType>(
+    props: Omit<StyledProps<As, P>, keyof BaseStyledProps> & BaseStyledProps & { as: As }
+  ): JSX.Element;
+  (props: StyledProps<T, P>): JSX.Element;
+} & {
+  withComponent: <NewT extends ElementType>(component: NewT) => StyledComponent<NewT, P>;
+};
+
+export type ThemedProps<P extends object = object> = P & Required<BaseStyledProps>;
+
+export type CSSInterpolation<P extends object = object> =
+  | string
+  | number
+  | ((props: ThemedProps<P>) => string | number);
+
+export type StyledTagFunction<T extends ElementType, P extends object = object> = {
+  (
+    strings: TemplateStringsArray,
+    ...values: CSSInterpolation<StyledProps<T, P>>[]
+  ): StyledComponent<T, P>;
+  <Props extends object = object>(
+    strings: TemplateStringsArray,
+    ...values: CSSInterpolation<StyledProps<T, Props>>[]
+  ): StyledComponent<T, Props>;
+};
+
+export type StyledFunction = {
+  <T extends ElementType, P extends object = object>(component: T): StyledTagFunction<T, P>;
+} & {
+  [Tag in (typeof tags)[number]]: StyledTagFunction<Tag>;
+};
+
+export type InjectorProps = {
+  className: string;
+  rule: string;
+  hash?: string;
+  globalStyle?: boolean;
+};
 
 export interface BasicTheme {
   [key: string]: unknown;

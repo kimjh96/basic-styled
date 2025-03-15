@@ -6,13 +6,14 @@ import stringToHash from "@utils/stringToHash";
 const styleSheet = new Map<string, string>();
 
 function insertRule(rule: string) {
-  const className = `${builder.prefix}-${stringToHash(rule)}`;
+  const hash = stringToHash(rule);
+  const className = `${builder.prefix}-${hash}`;
 
   if (!styleSheet.has(className)) {
     styleSheet.set(className, rule);
   }
 
-  return { className, rule };
+  return { className, rule, hash };
 }
 
 type StyleValue = string | number;

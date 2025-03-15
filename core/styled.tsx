@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-restricted-imports
-import React, { type ElementType, JSX } from "react";
+import React, { ElementType } from "react";
 
 import attributes from "@core/attributes";
 import css from "@core/css";
@@ -8,63 +8,22 @@ import Injector from "@core/injector";
 
 import Server from "@core/server";
 import tags from "@core/tags";
-import { BasicTheme, CSSObject } from "@core/typing";
+import {
+  BasicTheme,
+  StyledProps,
+  StyledFunction,
+  StyledTagFunction,
+  StyledComponent,
+  ThemedProps,
+  CSSInterpolation,
+  InjectorProps
+} from "@core/typing";
 
 import builder from "@setup/builder";
 
 import getThemeContext from "@setup/getThemeContext";
 
 import stringToKebabCase from "@utils/stringToKebabCase";
-
-type BaseStyledProps = {
-  theme?: BasicTheme;
-  globalStyle?: boolean;
-  css?:
-    | CSSObject
-    | (<T extends ElementType, P extends object = object>(
-        props: StyledProps<T, P> & { theme: BasicTheme }
-      ) => CSSObject);
-};
-
-type StyledProps<T extends ElementType, P extends object = object> = P &
-  BaseStyledProps &
-  Omit<
-    JSX.IntrinsicElements[T extends keyof JSX.IntrinsicElements ? T : "div"],
-    keyof BaseStyledProps | "ref"
-  >;
-
-type StyledComponent<T extends ElementType, P extends object = object> = {
-  <As extends ElementType>(
-    props: Omit<StyledProps<As, P>, keyof BaseStyledProps> & BaseStyledProps & { as: As }
-  ): JSX.Element;
-  (props: StyledProps<T, P>): JSX.Element;
-} & {
-  withComponent: <NewT extends ElementType>(component: NewT) => StyledComponent<NewT, P>;
-};
-
-type ThemedProps<P extends object = object> = P & Required<BaseStyledProps>;
-
-type CSSInterpolation<P extends object = object> =
-  | string
-  | number
-  | ((props: ThemedProps<P>) => string | number);
-
-type StyledTagFunction<T extends ElementType, P extends object = object> = {
-  (
-    strings: TemplateStringsArray,
-    ...values: CSSInterpolation<StyledProps<T, P>>[]
-  ): StyledComponent<T, P>;
-  <Props extends object = object>(
-    strings: TemplateStringsArray,
-    ...values: CSSInterpolation<StyledProps<T, Props>>[]
-  ): StyledComponent<T, Props>;
-};
-
-type StyledFunction = {
-  <T extends ElementType, P extends object = object>(component: T): StyledTagFunction<T, P>;
-} & {
-  [Tag in (typeof tags)[number]]: StyledTagFunction<Tag>;
-};
 
 function createStyledComponent<T extends ElementType, P extends object = object>(
   Component: T,
@@ -93,7 +52,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       )
     );
 
-    let inlineCSS = { className: "", rule: "" };
+    let inlineCSS: InjectorProps = { className: "", rule: "", hash: "" };
 
     if (props?.css) {
       const cssValue =
@@ -122,13 +81,13 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     if (props?.globalStyle) {
       return (
         <>
-          <Injector className={baseStyle.className} rule={baseStyle.rule} globalStyle />
-          {inlineCSS.className && (
-            <Injector className={inlineCSS.className} rule={inlineCSS.rule} globalStyle />
+          <Injector className={baseStyle.hash} rule={baseStyle.rule} globalStyle />
+          {inlineCSS.hash && (
+            <Injector className={inlineCSS.hash} rule={inlineCSS.rule} globalStyle />
           )}
-          <Server className={baseStyle.className} rule={baseStyle.rule} globalStyle />
-          {inlineCSS.className && (
-            <Server className={inlineCSS.className} rule={inlineCSS.rule} globalStyle />
+          <Server className={baseStyle.hash} rule={baseStyle.rule} globalStyle />
+          {inlineCSS.hash && (
+            <Server className={inlineCSS.hash} rule={inlineCSS.rule} globalStyle />
           )}
         </>
       );
