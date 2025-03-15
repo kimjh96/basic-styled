@@ -1,19 +1,19 @@
-import { PropsWithChildren, useInsertionEffect } from "react";
-
-import { InjectorProps } from "@core/typing";
+import { useInsertionEffect } from "react";
 
 import optimizeCSSRule from "@utils/optimizeCSSRule";
 
 function Injector({
-  children,
   className,
   rule,
-  hash,
   globalStyle
-}: PropsWithChildren<InjectorProps>) {
+}: {
+  className: string;
+  rule: string;
+  globalStyle?: boolean;
+}) {
   useInsertionEffect(() => {
     if (typeof document !== "undefined") {
-      const prevStyle = document.getElementById(globalStyle && hash ? hash : className);
+      const prevStyle = document.getElementById(className);
       const textContent = globalStyle ? rule : optimizeCSSRule(`.${className}`, rule);
 
       if (prevStyle) {
@@ -27,9 +27,20 @@ function Injector({
         document.head.appendChild(style);
       }
     }
-  }, [className, rule, hash, globalStyle]);
+  }, [className, rule, globalStyle]);
 
-  return children;
+  if (typeof document === "undefined") {
+    return (
+      <style
+        id={className}
+        dangerouslySetInnerHTML={{
+          __html: globalStyle ? rule : optimizeCSSRule(`.${className}`, rule)
+        }}
+      />
+    );
+  }
+
+  return null;
 }
 
 export default Injector;

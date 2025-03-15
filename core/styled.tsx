@@ -2,11 +2,10 @@
 import React, { ElementType } from "react";
 
 import attributes from "@core/attributes";
-import css from "@core/css";
+import css, { globalCSS } from "@core/css";
 import events from "@core/events";
 import Injector from "@core/injector";
 
-import Server from "@core/server";
 import tags from "@core/tags";
 import {
   BasicTheme,
@@ -15,8 +14,7 @@ import {
   StyledTagFunction,
   StyledComponent,
   ThemedProps,
-  CSSInterpolation,
-  InjectorProps
+  CSSInterpolation
 } from "@core/typing";
 
 import builder from "@setup/builder";
@@ -43,7 +41,10 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       }
     }
 
-    const baseStyle = css(
+    const isGlobalStyle = !!props?.globalStyle;
+    const styler = isGlobalStyle ? globalCSS : css;
+
+    const baseStyle = styler(
       strings,
       ...values.map((value) =>
         typeof value === "function"
@@ -52,7 +53,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       )
     );
 
-    let inlineCSS: InjectorProps = { className: "", rule: "", hash: "" };
+    let inlineCSS = { className: "", rule: "" };
 
     if (props?.css) {
       const cssValue =
@@ -73,21 +74,17 @@ function createStyledComponent<T extends ElementType, P extends object = object>
         })
         .join(" ");
 
-      inlineCSS = css`
+      inlineCSS = styler`
         ${cssString}
       `;
     }
 
-    if (props?.globalStyle) {
+    if (isGlobalStyle) {
       return (
         <>
-          <Injector className={baseStyle.hash} rule={baseStyle.rule} globalStyle />
-          {inlineCSS.hash && (
-            <Injector className={inlineCSS.hash} rule={inlineCSS.rule} globalStyle />
-          )}
-          <Server className={baseStyle.hash} rule={baseStyle.rule} globalStyle />
-          {inlineCSS.hash && (
-            <Server className={inlineCSS.hash} rule={inlineCSS.rule} globalStyle />
+          <Injector className={baseStyle.className} rule={baseStyle.rule} globalStyle />
+          {inlineCSS.className && (
+            <Injector className={inlineCSS.className} rule={inlineCSS.rule} globalStyle />
           )}
         </>
       );
@@ -119,8 +116,6 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       <>
         <Injector className={baseStyle.className} rule={baseStyle.rule} />
         {inlineCSS.className && <Injector className={inlineCSS.className} rule={inlineCSS.rule} />}
-        <Server className={baseStyle.className} rule={baseStyle.rule} />
-        {inlineCSS.className && <Server className={inlineCSS.className} rule={inlineCSS.rule} />}
         <FinalComponent {...naturalProps} className={finalClassName}>
           {props?.children}
         </FinalComponent>

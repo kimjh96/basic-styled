@@ -1,12 +1,13 @@
 import builder from "@setup/builder";
 
+import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 import removeSpace from "@utils/removeSpace";
 import stringToHash from "@utils/stringToHash";
 
 const styleSheet = new Map<string, string>();
 
-function insertRule(rule: string) {
-  const hash = stringToHash(rule);
+function insertRule(rule: string, globalStyle = false) {
+  const hash = stringToHash(globalStyle ? getExtractCSSProperties(rule).join(" ") : rule);
   const className = `${builder.prefix}-${hash}`;
 
   if (!styleSheet.has(className)) {
@@ -51,10 +52,8 @@ function stringifyStyle(style: NestedStyleObject, parentSelector: string = ""): 
   return rules.join(" ");
 }
 
-type CSSValue = string | number | ((props: object) => string | number | NestedStyleObject);
-
-function css(strings: TemplateStringsArray, ...values: CSSValue[]) {
-  const rule = strings.reduce((acc, str, i) => {
+function reduceRule(strings: TemplateStringsArray, ...values: CSSValue[]) {
+  return strings.reduce((acc, str, i) => {
     const value = values[i];
     if (typeof value === "function") {
       const result = value({});
@@ -65,8 +64,20 @@ function css(strings: TemplateStringsArray, ...values: CSSValue[]) {
     }
     return acc + str + (value ?? "");
   }, "");
+}
+
+type CSSValue = string | number | ((props: object) => string | number | NestedStyleObject);
+
+function css(strings: TemplateStringsArray, ...values: CSSValue[]) {
+  const rule = reduceRule(strings, ...values);
 
   return insertRule(removeSpace(rule));
+}
+
+export function globalCSS(strings: TemplateStringsArray, ...values: CSSValue[]) {
+  const rule = reduceRule(strings, ...values);
+
+  return insertRule(removeSpace(rule), true);
 }
 
 export default css;

@@ -61,13 +61,6 @@ export type StyledFunction = {
   [Tag in (typeof tags)[number]]: StyledTagFunction<Tag>;
 };
 
-export type InjectorProps = {
-  className: string;
-  rule: string;
-  hash?: string;
-  globalStyle?: boolean;
-};
-
 export interface BasicTheme {
   [key: string]: unknown;
 }
