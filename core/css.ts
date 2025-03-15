@@ -1,3 +1,13 @@
+import { ElementType } from "react";
+
+import {
+  NestedStyleObject,
+  CSSInterpolation,
+  StyledProps,
+  ThemedProps,
+  CSSObject
+} from "@core/typing";
+
 import builder from "@setup/builder";
 
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
@@ -17,12 +27,7 @@ function insertRule(rule: string, globalStyle = false) {
   return { className, rule, hash };
 }
 
-type StyleValue = string | number;
-type NestedStyleObject = {
-  [key: string]: StyleValue | NestedStyleObject;
-};
-
-function stringifyStyle(style: NestedStyleObject, parentSelector: string = ""): string {
+function stringifyStyle(style: NestedStyleObject | CSSObject, parentSelector: string = "") {
   const rules: string[] = [];
 
   for (const [key, value] of Object.entries(style)) {
@@ -30,7 +35,7 @@ function stringifyStyle(style: NestedStyleObject, parentSelector: string = ""): 
       const selector = key.startsWith("&")
         ? parentSelector
           ? key.replace("&", parentSelector)
-          : key // Keep the & if there's no parent selector
+          : key
         : parentSelector
           ? `${parentSelector} ${key}`
           : key;
@@ -38,7 +43,6 @@ function stringifyStyle(style: NestedStyleObject, parentSelector: string = ""): 
       continue;
     }
 
-    // Convert camelCase to kebab-case for property names
     const property = key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
     const declaration = `${property}: ${value};`;
 
@@ -52,11 +56,14 @@ function stringifyStyle(style: NestedStyleObject, parentSelector: string = ""): 
   return rules.join(" ");
 }
 
-function reduceRule(strings: TemplateStringsArray, ...values: CSSValue[]) {
-  return strings.reduce((acc, str, i) => {
+function css<T extends ElementType, P extends object = object>(
+  strings: TemplateStringsArray,
+  ...values: CSSInterpolation<StyledProps<T, P>>[]
+) {
+  const rule = strings.reduce((acc, str, i) => {
     const value = values[i];
     if (typeof value === "function") {
-      const result = value({});
+      const result = value({} as ThemedProps<StyledProps<T, P>>);
       if (typeof result === "object") {
         return acc + str + stringifyStyle(result);
       }
@@ -64,18 +71,25 @@ function reduceRule(strings: TemplateStringsArray, ...values: CSSValue[]) {
     }
     return acc + str + (value ?? "");
   }, "");
-}
-
-type CSSValue = string | number | ((props: object) => string | number | NestedStyleObject);
-
-function css(strings: TemplateStringsArray, ...values: CSSValue[]) {
-  const rule = reduceRule(strings, ...values);
 
   return insertRule(removeSpace(rule));
 }
 
-export function globalCSS(strings: TemplateStringsArray, ...values: CSSValue[]) {
-  const rule = reduceRule(strings, ...values);
+export function globalCSS<T extends ElementType, P extends object = object>(
+  strings: TemplateStringsArray,
+  ...values: CSSInterpolation<StyledProps<T, P>>[]
+) {
+  const rule = strings.reduce((acc, str, i) => {
+    const value = values[i];
+    if (typeof value === "function") {
+      const result = value({} as ThemedProps<StyledProps<T, P>>);
+      if (typeof result === "object") {
+        return acc + str + stringifyStyle(result);
+      }
+      return acc + str + result;
+    }
+    return acc + str + (value ?? "");
+  }, "");
 
   return insertRule(removeSpace(rule), true);
 }

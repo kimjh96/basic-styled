@@ -1,4 +1,4 @@
-import { ElementType, JSX } from "react";
+import { ElementType, JSX, ComponentPropsWithRef } from "react";
 
 import tags from "@core/tags";
 
@@ -25,8 +25,10 @@ export type StyledProps<T extends ElementType, P extends object = object> = P &
   BaseStyledProps &
   Omit<
     JSX.IntrinsicElements[T extends keyof JSX.IntrinsicElements ? T : "div"],
-    keyof BaseStyledProps | "ref"
-  >;
+    keyof BaseStyledProps
+  > & {
+    ref?: ComponentPropsWithRef<T>["ref"];
+  };
 
 export type StyledComponent<T extends ElementType, P extends object = object> = {
   <As extends ElementType>(
@@ -39,10 +41,21 @@ export type StyledComponent<T extends ElementType, P extends object = object> = 
 
 export type ThemedProps<P extends object = object> = P & Required<BaseStyledProps>;
 
+export type NestedStyleObject = {
+  [key: string]: string | number | CSSObject | NestedStyleObject;
+};
+
+export type CSSValue =
+  | string
+  | number
+  | CSSObject
+  | ((props: object) => string | number | NestedStyleObject);
+
 export type CSSInterpolation<P extends object = object> =
   | string
   | number
-  | ((props: ThemedProps<P>) => string | number);
+  | CSSObject
+  | ((props: ThemedProps<P>) => string | number | CSSObject);
 
 export type StyledTagFunction<T extends ElementType, P extends object = object> = {
   (

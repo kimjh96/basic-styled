@@ -44,7 +44,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     const isGlobalStyle = !!props?.globalStyle;
     const styler = isGlobalStyle ? globalCSS : css;
 
-    const baseStyle = styler(
+    const baseStyle = styler<T, P>(
       strings,
       ...values.map((value) =>
         typeof value === "function"
