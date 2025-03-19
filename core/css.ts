@@ -14,15 +14,9 @@ import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 import removeSpace from "@utils/removeSpace";
 import stringToHash from "@utils/stringToHash";
 
-const styleSheet = new Map<string, string>();
-
 function insertRule(rule: string, globalStyle = false) {
   const hash = stringToHash(globalStyle ? getExtractCSSProperties(rule).join(" ") : rule);
   const className = `${builder.prefix}-${hash}`;
-
-  if (!styleSheet.has(className)) {
-    styleSheet.set(className, rule);
-  }
 
   return { className, rule, hash };
 }

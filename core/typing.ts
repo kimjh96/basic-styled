@@ -45,12 +45,6 @@ export type NestedStyleObject = {
   [key: string]: string | number | CSSObject | NestedStyleObject;
 };
 
-export type CSSValue =
-  | string
-  | number
-  | CSSObject
-  | ((props: object) => string | number | NestedStyleObject);
-
 export type CSSInterpolation<P extends object = object> =
   | string
   | number
