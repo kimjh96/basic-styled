@@ -35,8 +35,7 @@ const Box = styled.div`
 `;
 ```
 
-## 예시
-### Theming
+## Theming
 ```tsx
 // App.tsx
 
@@ -59,9 +58,8 @@ function App() {
 export default App;
 ```
 
+## TypeScript
 ```tsx
-// with TypeScript
-
 import "basic-styled";
 
 declare module "basic-styled" {
@@ -73,7 +71,7 @@ declare module "basic-styled" {
 }
 ```
 
-### Next.js
+## Next.js
 ```tsx
 // layout.tsx
 
@@ -130,7 +128,7 @@ function Providers({ children }: PropsWithChildren) {
 export default Providers;
 ```
 
-### ResetStyle
+## ResetStyle
 ```tsx
 // App.tsx
 
@@ -155,7 +153,7 @@ function App() {
 export default App;
 ```
 
-### GlobalStyle
+## GlobalStyle
 ```tsx
 // App.tsx
 
@@ -195,6 +193,3 @@ const StyledGlobal = styled.style`
   }
 `;
 ```
-
-## 데모
-[plandy-web](https://github.com/case-d-plandy/plandy-web) (https://plandy.case-d.com)
