@@ -11,14 +11,16 @@ export type CSSObject =
       [propertiesName: string]: Properties;
     };
 
+export type CSS =
+  | CSSObject
+  | (<T extends ElementType, P extends object = object>(
+      props: ThemedProps<StyledProps<T, P>>
+    ) => CSSObject);
+
 export type BaseStyledProps = {
   theme?: BasicTheme;
   globalStyle?: boolean;
-  css?:
-    | CSSObject
-    | (<T extends ElementType, P extends object = object>(
-        props: ThemedProps<StyledProps<T, P>>
-      ) => CSSObject);
+  css?: CSS;
 };
 
 export type StyledProps<T extends ElementType, P extends object = object> = P &

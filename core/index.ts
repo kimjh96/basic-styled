@@ -1,6 +1,6 @@
 import styled from "@core/styled";
-import { CSSObject, BasicTheme } from "@core/typing";
+import { CSSObject, BasicTheme, CSS } from "@core/typing";
 
 export default styled;
 
-export type { CSSObject, BasicTheme };
+export type { CSSObject, BasicTheme, CSS };
