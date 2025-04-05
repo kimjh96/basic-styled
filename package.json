@@ -28,6 +28,10 @@
     "./setup/useTheme": {
       "import": "./dist/setup/useTheme.mjs",
       "types": "./dist/setup/useTheme.d.ts"
+    },
+    "./core/typing": {
+      "import": "./dist/core/typing.d.ts",
+      "types": "./dist/core/typing.d.ts"
     }
   },
   "sideEffects": false,
