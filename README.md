@@ -142,7 +142,7 @@ declare module "basic-styled" {
 }
 ```
 
-이렇게 타입을 정의해두면 컴포넌트에서 테마 속성에 안전하게 접근할 수 있어요:
+이렇게 타입을 정의해두면 컴포넌트에서 테마 속성에 안전하게 접근할 수 있어요.
 
 ```tsx
 import styled from 'basic-styled';
@@ -210,7 +210,7 @@ function App() {
 
 ### useTheme
 
-테마에 직접 접근할 수 있는 Hook이에요.
+테마에 직접 접근할 수 있는 훅이에요.
 
 ```tsx
 import useTheme from 'basic-styled/setup/useTheme';
@@ -439,5 +439,4 @@ export default function Providers({ children }: PropsWithChildren) {
 ```
 
 ## License
-
 MIT
