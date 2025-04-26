@@ -8,7 +8,7 @@ import {
   CSSObject
 } from "@core/typing";
 
-import builder from "@setup/builder";
+import config from "@setup/config";
 
 import getExtractCSSProperties from "@utils/getExtractCSSProperties";
 import removeSpace from "@utils/removeSpace";
@@ -16,7 +16,7 @@ import stringToHash from "@utils/stringToHash";
 
 function insertRule(rule: string, globalStyle = false) {
   const hash = stringToHash(globalStyle ? getExtractCSSProperties(rule).join(" ") : rule);
-  const className = `${builder.prefix}-${hash}`;
+  const className = `${config.prefix}-${hash}`;
 
   return { className, rule, hash };
 }

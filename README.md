@@ -307,9 +307,9 @@ function App() {
 }
 ```
 
-### createBuilder
+### configureStyled
 
-서버와 클라이언트 사이에서 테마를 일관되게 유지하는 동기화 기능을 제공해요. 클래스명에 사용되는 접두사도 원하는 대로 설정할 수 있어요.
+라이브러리의 전역 설정을 구성하는 함수예요. 테마 설정과 클래스명의 접두사를 변경할 수 있어요.
 
 ```tsx
 // theme.ts
@@ -321,12 +321,12 @@ export const theme = {
 
 // app/layout.tsx
 import { PropsWithChildren } from 'react';
-import createBuilder from "basic-styled/setup/createBuilder";
+import configureStyled from "basic-styled/setup/configureStyled";
 import { theme } from '../theme';
 
-createBuilder({
+configureStyled({
   prefix: 'basic-styled', // 접두사 (기본값: 'basic-styled')
-  theme
+  theme                   // 전역 테마 객체
 });
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -399,11 +399,11 @@ export const theme = {
 
 // app/layout.tsx
 import { PropsWithChildren } from 'react';
-import createBuilder from "basic-styled/setup/createBuilder";
+import configureStyled from "basic-styled/setup/configureStyled";
 import { theme } from '../theme';
 import Providers from "./providers";
 
-createBuilder({
+configureStyled({
   prefix: 'basic-styled',
   theme
 });

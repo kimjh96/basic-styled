@@ -16,7 +16,7 @@ import {
   CSSInterpolation
 } from "@core/typing";
 
-import builder from "@setup/builder";
+import config from "@setup/config";
 
 import getThemeContext from "@setup/getThemeContext";
 
@@ -37,7 +37,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
       try {
         props.theme = React.useContext(getThemeContext()) as StyledProps<T, P>["theme"];
       } catch {
-        props.theme = builder.theme as StyledProps<T, P>["theme"];
+        props.theme = config.theme as StyledProps<T, P>["theme"];
       }
     }
 
