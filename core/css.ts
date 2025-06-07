@@ -50,42 +50,25 @@ function stringifyStyle(style: NestedStyleObject | CSSObject, parentSelector: st
   return rules.join(" ");
 }
 
-function css<T extends ElementType, P extends object = object>(
-  strings: TemplateStringsArray,
-  ...values: CSSInterpolation<StyledProps<T, P>>[]
-) {
-  const rule = strings.reduce((acc, str, i) => {
-    const value = values[i];
-    if (typeof value === "function") {
-      const result = value({} as ThemedProps<StyledProps<T, P>>);
-      if (typeof result === "object") {
-        return acc + str + stringifyStyle(result);
+function css(globalStyle = false) {
+  return <T extends ElementType, P extends object = object>(
+    strings: TemplateStringsArray,
+    ...values: CSSInterpolation<StyledProps<T, P>>[]
+  ) => {
+    const rule = strings.reduce((acc, str, i) => {
+      const value = values[i];
+      if (typeof value === "function") {
+        const result = value({} as ThemedProps<StyledProps<T, P>>);
+        if (typeof result === "object") {
+          return acc + str + stringifyStyle(result);
+        }
+        return acc + str + result;
       }
-      return acc + str + result;
-    }
-    return acc + str + (value ?? "");
-  }, "");
+      return acc + str + (value ?? "");
+    }, "");
 
-  return insertRule(removeSpace(rule));
-}
-
-export function globalCSS<T extends ElementType, P extends object = object>(
-  strings: TemplateStringsArray,
-  ...values: CSSInterpolation<StyledProps<T, P>>[]
-) {
-  const rule = strings.reduce((acc, str, i) => {
-    const value = values[i];
-    if (typeof value === "function") {
-      const result = value({} as ThemedProps<StyledProps<T, P>>);
-      if (typeof result === "object") {
-        return acc + str + stringifyStyle(result);
-      }
-      return acc + str + result;
-    }
-    return acc + str + (value ?? "");
-  }, "");
-
-  return insertRule(removeSpace(rule), true);
+    return insertRule(removeSpace(rule), globalStyle);
+  };
 }
 
 export default css;

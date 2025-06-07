@@ -2,7 +2,7 @@
 import React, { ElementType } from "react";
 
 import attributes from "@core/attributes";
-import css, { globalCSS } from "@core/css";
+import css from "@core/css";
 import events from "@core/events";
 import Injector from "@core/injector";
 
@@ -42,7 +42,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
     }
 
     const isGlobalStyle = !!props?.globalStyle;
-    const styler = isGlobalStyle ? globalCSS : css;
+    const styler = css(isGlobalStyle);
 
     const baseStyle = styler<T, P>(
       strings,
@@ -64,7 +64,7 @@ function createStyledComponent<T extends ElementType, P extends object = object>
         .map(([key, value]) => {
           if (typeof value === "object") {
             const nestedRules = Object.entries(value)
-              .map(([nestedKey, nestedValue]) => `${stringToKebabCase(nestedKey)}: ${nestedValue};`)
+              .map(([nestedKey, nestedValue]) => `${stringToKebabCase(nestedKey)}: ${nestedValue}`)
               .join(" ");
             return `${key} { ${nestedRules} }`;
           }
